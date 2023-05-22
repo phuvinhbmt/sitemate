@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../app.module';
+import {Issue} from "../issue/issue.interface";
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -24,7 +25,7 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/issue')
       .expect(200)
-      .expect({});
+      .expect([]);
   });
 
   it('POST /issue', () => {
@@ -36,5 +37,26 @@ describe('AppController (e2e)', () => {
         description: '1st issue'
       })
       .expect(201);
+  })
+  it('PUT /issue', async () => {
+    const toUpdate: Issue = {
+      id: 1,
+      title: 'Github',
+      description: 'new description'
+    };
+    await request(app.getHttpServer())
+      .put('/issue')
+      .send(toUpdate)
+      .expect(200);
+
+    return request(app.getHttpServer())
+      .get('/issue')
+      .expect(200)
+      .expect([toUpdate]);
+  });
+  it('DELETE /issue', async () => {
+    return request(app.getHttpServer())
+      .delete('/issue/1')
+      .expect(200);
   })
 });

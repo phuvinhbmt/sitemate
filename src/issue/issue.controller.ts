@@ -18,6 +18,7 @@ export class IssueController {
 
   @Put()
   update(@Body() issue: Issue) {
+    console.log(issue);
     return this.issueService.update(issue);
   }
 
