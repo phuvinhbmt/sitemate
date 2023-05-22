@@ -21,6 +21,7 @@ export class IssueService {
   }
 
   update(issue: Issue) {
-
+    const toUpdate = IssueService.issues.find(i => i.id === issue.id);
+    return IssueService.issues.map(i => i.id === issue.id ? {...issue}: i);
   }
 }
