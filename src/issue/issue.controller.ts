@@ -8,7 +8,6 @@ export class IssueController {
 
   @Post()
   create(@Body() issue: Issue)  {
-    console.log(issue);
     return this.issueService.create(issue);
   }
   @Get()
